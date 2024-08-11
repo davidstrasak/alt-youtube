@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from "svelte";
 	let jsonData: any = { items: [] };
 	let error: any = null;
 	export let data;
@@ -11,8 +10,7 @@
 				headers: {
 					"Content-Type": "application/json"
 				},
-				// body: JSON.stringify({ channelID: "UCD6ERRdXrF2IZ0R888G8PQg" })
-				body: JSON.stringify({ channelID: "UCEKJKJ3FO-9SFv5x5BzyxhQ" })
+				body: JSON.stringify({ channelID: "UCD6ERRdXrF2IZ0R888G8PQg" })
 			});
 
 			if (!response.ok) {
@@ -22,15 +20,18 @@
 			jsonData = await response.json();
 		} catch (err: any) {
 			error = err.message;
+		} finally {
+			location.reload();
 		}
 	}
 </script>
 
 <!-- <button on:click={fetchHandle}>Fetch the channel data</button> -->
 
-<button on:click={fetchVids}>Fetch the video data</button>
+<button on:click={fetchVids} class="btn btn-lg m-10">Fetch the video data</button>
 
 {#each data.files && data.files as item}
+	<p>{item.snippet.publishedAt}</p>
 	<iframe
 		title="video"
 		width="560"
