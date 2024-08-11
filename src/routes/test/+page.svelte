@@ -4,7 +4,7 @@
 	let videos: any[] = [];
 
 	onMount(async () => {
-		const res = await fetch("/api/youtube?channelId=UCD6ERRdXrF2IZ0R888G8PQg");
+		const res = await fetch("/api/axiosTest?channelId=UCD6ERRdXrF2IZ0R888G8PQg");
 		const data = await res.json();
 		videos = data;
 	});

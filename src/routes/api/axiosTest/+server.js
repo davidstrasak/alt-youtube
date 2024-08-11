@@ -1,10 +1,11 @@
 // src/routes/api/youtube.js
 import { json } from "@sveltejs/kit";
 import axios from "axios";
+import { YT_API_KEY } from "$env/static/private";
 
 export async function GET({ url }) {
 	const channelId = url.searchParams.get("channelId");
-	const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY; // Replace with your API key
+	const apiKey = YT_API_KEY; // Replace with your API key
 
 	const searchResponse = await axios.get(`https://www.googleapis.com/youtube/v3/search`, {
 		params: {
@@ -17,7 +18,7 @@ export async function GET({ url }) {
 		}
 	});
 
-	const videoIds = searchResponse.data.items.map((item: any) => item.id.videoId);
+	const videoIds = searchResponse.data.items.map((item) => item.id.videoId);
 
 	const videosResponse = await axios.get(`https://www.googleapis.com/youtube/v3/videos`, {
 		params: {
