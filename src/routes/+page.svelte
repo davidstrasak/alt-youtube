@@ -2,7 +2,7 @@
 	import FetchVids from "$lib/FetchVids.svelte";
 	import FetchHandle from "$lib/FetchHandle.svelte";
 
-	let data: any;
+	let data: any = [];
 	let handle: string = "@DUNGEONCRAFT1";
 
 	async function fetchHandle() {
