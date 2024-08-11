@@ -4,18 +4,29 @@ import { writeFile } from "fs/promises";
 
 export async function POST({ request }) {
 	try {
-		let { channelID } = await request.json();
+		let { channelID, pageToken } = await request.json();
 		let apiKey = YT_API_KEY;
 
-		const response = await fetch(
-			`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelID}&maxResults=5&order=date&type=video&key=${apiKey}`
-		);
+		const url = new URL("https://www.googleapis.com/youtube/v3/search");
+		url.searchParams.set("part", "snippet");
+		url.searchParams.set("channelId", channelID);
+		url.searchParams.set("maxResults", "5");
+		url.searchParams.set("order", "date");
+		url.searchParams.set("type", "video");
+		url.searchParams.set("key", apiKey);
+		if (pageToken) {
+			url.searchParams.set("pageToken", pageToken);
+		}
+
+		const response = await fetch(url.toString());
 		if (!response.ok) {
 			throw new Error(`Error: ${response.status}`);
 		}
+
 		const data = await response.json();
 
-		writeFile(`files/${channelID}${new Date().getTime()}.json`, JSON.stringify(data.items));
+		// Write to file (you might want to adjust the file path and naming)
+		writeFile(`files/${channelID}_${pageToken || 0}.json`, JSON.stringify(data.items));
 
 		return json(data);
 	} catch (error) {
