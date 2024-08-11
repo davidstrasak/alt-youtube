@@ -3,6 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
+		"git": "git add . && git commit && git push origin main",
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",

@@ -20,8 +20,4 @@
 
 <h1>Get youtube data from the channel {handle}</h1>
 
-<h2>Fetch the handle:</h2>
-<button on:click={fetchHandle}>fetch</button>
-<br />
-<br />
-{data}
+<FetchHandle />

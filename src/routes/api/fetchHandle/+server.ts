@@ -1,18 +1,21 @@
-import { writeFile } from 'fs/promises';
-import { json } from '@sveltejs/kit'; // Assuming you are using SvelteKit
-import { YT_API_KEY } from '$env/static/private';
-
+import { json } from "@sveltejs/kit";
+import { YT_API_KEY } from "$env/static/private";
 
 export async function POST({ request }) {
-    try {
-        let { handle } = await request.json();
-        await writeFile(`files/${handle}.json`, JSON.stringify(handle));
+	try {
+		let { handle } = await request.json();
+		let apiKey = YT_API_KEY;
 
-        let apiKey = YT_API_KEY;
+		const response = await fetch(
+			`https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&q=${handle}&key=${apiKey}`
+		);
+		if (!response.ok) {
+			throw new Error(`Error: ${response.status}`);
+		}
+		const data = await response.json();
 
-
-        return json(JSON.stringify({handle, apiKey}));
-    } catch (error) {
-        return json({ error: 'Failed to write file' }, { status: 500 });
-    }
+		return json(data);
+	} catch (error) {
+		return json({ error: "Failed to fetch data" }, { status: 500 });
+	}
 }
