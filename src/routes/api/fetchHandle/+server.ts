@@ -3,11 +3,13 @@ import { YT_API_KEY } from "$env/static/private";
 
 export async function POST({ request }) {
 	try {
-		let { handle } = await request.json();
+		let { handle, channelID } = await request.json();
 		let apiKey = YT_API_KEY;
 
+		console.log(channelID);
+
 		const response = await fetch(
-			`https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&q=${handle}&key=${apiKey}`
+			`https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&id=${channelID}&q=${handle}&key=${apiKey}`
 		);
 		if (!response.ok) {
 			throw new Error(`Error: ${response.status}`);

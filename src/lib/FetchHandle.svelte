@@ -29,6 +29,4 @@
 	<p>{error}</p>
 {:else if jsonData}
 	<pre>{JSON.stringify(jsonData, null, 2)}</pre>
-{:else}
-	<p>Loading...</p>
 {/if}
