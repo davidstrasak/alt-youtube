@@ -1,6 +1,9 @@
 <script lang="ts">
+	import { ChannelIDs } from "$lib/ChannelIDs.js";
+
 	let jsonData: any = { items: [] };
 	let error: any = null;
+	let channel: any = ChannelIDs[0];
 	export let data;
 
 	async function fetchVids() {
@@ -10,7 +13,7 @@
 				headers: {
 					"Content-Type": "application/json"
 				},
-				body: JSON.stringify({ channelID: "UClBdM5tlHgXTowzjJfHv8Dg" })
+				body: JSON.stringify({ channelID: channel.ID })
 			});
 
 			if (!response.ok) {
@@ -26,7 +29,15 @@
 	}
 </script>
 
-<!-- <button on:click={fetchHandle}>Fetch the channel data</button> -->
+{#if error}
+	<p>Error: {error}</p>
+{/if}
+
+<select bind:value={channel}>
+	{#each ChannelIDs as channelID}
+		<option value={channelID}>{channelID.name}</option>
+	{/each}
+</select>
 
 <button on:click={fetchVids} class="btn btn-lg m-10">Fetch the video data</button>
 
