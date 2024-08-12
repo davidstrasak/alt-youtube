@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { ChannelIDs } from "$lib/ChannelIDs.js";
+	import he from "he";
 
 	let jsonData: any = { items: [] };
 	let error: any = null;
@@ -27,6 +28,10 @@
 			location.reload();
 		}
 	}
+
+	function decodeHtmlEntities(text: string): string {
+		return he.decode(text);
+	}
 </script>
 
 {#if error}
@@ -48,7 +53,7 @@
 			<a href={`/videos/${item.id.videoId}`} target="_blank">
 				<img src={item.snippet.thumbnails.medium.url} alt={item.snippet.title} />
 			</a>
-			<p>{item.snippet.title}</p>
+			<p>{decodeHtmlEntities(item.snippet.title)}</p>
 			<p>
 				Publikováno: {new Date(item.snippet.publishedAt).getDate()}.{new Date(
 					item.snippet.publishedAt
