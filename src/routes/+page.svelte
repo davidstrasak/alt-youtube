@@ -13,7 +13,7 @@
 				headers: {
 					"Content-Type": "application/json"
 				},
-				body: JSON.stringify({ channelID: channel.ID })
+				body: JSON.stringify({ channelID: channel.ID, channelName: channel.name })
 			});
 
 			if (!response.ok) {
@@ -42,7 +42,13 @@
 <button on:click={fetchVids} class="btn btn-lg m-10">Fetch the video data</button>
 
 {#each data.files && data.files as item}
-	<p>{item.snippet.publishedAt}</p>
+	<p>
+		Publikováno: {new Date(item.snippet.publishedAt).getDate()}.{new Date(
+			item.snippet.publishedAt
+		).getMonth()}.{new Date(item.snippet.publishedAt).getFullYear()} v {new Date(
+			item.snippet.publishedAt
+		).getHours()}h
+	</p>
 	<iframe
 		title="video"
 		width="560"
