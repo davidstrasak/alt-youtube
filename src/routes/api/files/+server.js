@@ -1,7 +1,7 @@
 import fs from "fs";
 import { json } from "@sveltejs/kit";
 
-// This script is importing the files from the /files directory and returning the data so it can be displayed on the main page
+// This script is importing the files from the /files directory and returning the data in a displayable format (for example getting only unique videos)
 
 export async function GET() {
 	const files = fs.readdirSync(`./files`);

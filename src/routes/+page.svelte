@@ -46,21 +46,30 @@
 
 <button on:click={fetchVids} class="btn btn-lg m-10">Fetch the video data</button>
 
-{#if data.files}
-	{#each data.files as item}
-		<div class="video-item">
-			<!-- Generate a link to the dynamic route with the videoId -->
-			<a href={`/videos/${item.id.videoId}`} target="_blank">
-				<img src={item.snippet.thumbnails.medium.url} alt={item.snippet.title} />
-			</a>
-			<p>{decodeHtmlEntities(item.snippet.title)}</p>
-			<p>
-				Publikováno: {new Date(item.snippet.publishedAt).getDate()}.{new Date(
-					item.snippet.publishedAt
-				).getMonth() + 1}.{new Date(item.snippet.publishedAt).getFullYear()} v {new Date(
-					item.snippet.publishedAt
-				).getHours()}h
-			</p>
-		</div>
-	{/each}
-{/if}
+<div class="flex flex-row">
+	<button class="btn">Latest</button>
+	<button class="btn">TTRPGs</button>
+	<button class="btn">Engineering</button>
+</div>
+
+<div class="grid grid-cols-4">
+	{#if data.files}
+		{#each data.files as item}
+			<div class="">
+				<p>
+					Publikováno: {new Date(item.snippet.publishedAt).getDate()}.{new Date(
+						item.snippet.publishedAt
+					).getMonth() + 1}.{new Date(item.snippet.publishedAt).getFullYear()} v {new Date(
+						item.snippet.publishedAt
+					).getHours()}h
+				</p>
+				<!-- Generate a link to the dynamic route with the videoId -->
+				<a href={`/videos/${item.id.videoId}`} target="_blank">
+					<img src={item.snippet.thumbnails.medium.url} alt={item.snippet.title} />
+				</a>
+				<p>{decodeHtmlEntities(item.snippet.title)}</p>
+				<p>{decodeHtmlEntities(item.snippet.description)}</p>
+			</div>
+		{/each}
+	{/if}
+</div>
