@@ -41,20 +41,21 @@
 
 <button on:click={fetchVids} class="btn btn-lg m-10">Fetch the video data</button>
 
-{#each data.files && data.files as item}
-	<p>
-		Publikováno: {new Date(item.snippet.publishedAt).getDate()}.{new Date(
-			item.snippet.publishedAt
-		).getMonth()}.{new Date(item.snippet.publishedAt).getFullYear()} v {new Date(
-			item.snippet.publishedAt
-		).getHours()}h
-	</p>
-	<iframe
-		title="video"
-		width="560"
-		height="315"
-		src="https://www.youtube.com/embed/{item.id.videoId}?rel=0&autoplay=0"
-		frameborder="0"
-		allowfullscreen
-	></iframe>
-{/each}
+{#if data.files}
+	{#each data.files as item}
+		<div class="video-item">
+			<!-- Generate a link to the dynamic route with the videoId -->
+			<a href={`/videos/${item.id.videoId}`} target="_blank">
+				<img src={item.snippet.thumbnails.medium.url} alt={item.snippet.title} />
+			</a>
+			<p>{item.snippet.title}</p>
+			<p>
+				Publikováno: {new Date(item.snippet.publishedAt).getDate()}.{new Date(
+					item.snippet.publishedAt
+				).getMonth() + 1}.{new Date(item.snippet.publishedAt).getFullYear()} v {new Date(
+					item.snippet.publishedAt
+				).getHours()}h
+			</p>
+		</div>
+	{/each}
+{/if}
