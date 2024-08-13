@@ -36,7 +36,6 @@
 	"type": "module",
 	"dependencies": {
 		"@types/node": "^22.2.0",
-		"axios": "^1.7.3",
 		"daisyui": "^4.12.10",
 		"fs": "^0.0.1-security",
 		"he": "^1.2.0",
