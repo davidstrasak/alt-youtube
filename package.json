@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"git": "git add . && git commit && git push origin main",
-		"dev": "vite dev",
+		"dev": "vite dev --open",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",

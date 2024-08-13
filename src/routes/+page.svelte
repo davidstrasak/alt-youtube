@@ -2,7 +2,7 @@
 	import { ChannelIDs } from "$lib/ChannelIDs.js";
 	import he from "he";
 
-	let jsonData: any = { items: [] };
+	let jsonData: any = { items: [] }; // this is unused atm but if need to stringify the data on the site I can use this
 	let error: any = null;
 	let channel: any = ChannelIDs[0];
 	export let data;
