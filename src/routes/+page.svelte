@@ -39,16 +39,20 @@
 	<p class="text-xl">Error: {error}</p>
 {/if}
 
-<div class="pt-6">
-	<select class="select select-lg w-full max-w-xs" bind:value={channel}>
+<div class="w-full">
+	<select class="select select-lg w-full max-w-80" bind:value={channel}>
 		{#each ChannelIDs as channelID}
 			<option value={channelID}>{channelID.name}</option>
 		{/each}
 	</select>
-	<button on:click={fetchVids} class="btn btn-lg m-10 btn-primary">Fetch the video data</button>
+	<button on:click={fetchVids} class="btn btn-lg my-10 mx-auto btn-primary"
+		>Fetch the video data</button
+	>
 </div>
 
-<div class="flex flex-row gap-6 mb-6 navbar bg-neutral rounded-box w-full">
+<div
+	class="flex flex-row gap-6 mb-6 navbar bg-neutral rounded-box w-full justify-center md:justify-normal"
+>
 	<button
 		class="btn {filter === 'latest' ? 'btn-primary' : ''}"
 		on:click={() => {
@@ -69,10 +73,10 @@
 	>
 </div>
 
-<!-- <div class="grid grid-cols-4">
+<div class="grid gap-10 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 xl:grid-cols-4">
 	{#if data.files}
 		{#each data.files as item}
-			<div class="">
+			<div class="mx-auto" style="width: 320px">
 				<p>
 					Publikováno: {new Date(item.snippet.publishedAt).getDate()}.{new Date(
 						item.snippet.publishedAt
@@ -80,13 +84,17 @@
 						item.snippet.publishedAt
 					).getHours()}h
 				</p>
-				Generate a link to the dynamic route with the videoId
+				<!-- Generate a link to the dynamic route with the videoId -->
 				<a href={`/videos/${item.id.videoId}`} target="_blank">
-					<img src={item.snippet.thumbnails.medium.url} alt={item.snippet.title} />
+					<img
+						src={item.snippet.thumbnails.medium.url}
+						alt={item.snippet.title}
+						class="rounded-box"
+					/>
 				</a>
 				<p>{decodeHtmlEntities(item.snippet.title)}</p>
-				<p>{decodeHtmlEntities(item.snippet.description)}</p>
+				<p class="text-justify">{decodeHtmlEntities(item.snippet.description)}</p>
 			</div>
 		{/each}
 	{/if}
-</div> -->
+</div>
