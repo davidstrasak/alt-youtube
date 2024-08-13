@@ -3,6 +3,10 @@ import { YT_API_KEY } from "$env/static/private";
 import { writeFile } from "fs/promises";
 import { ChannelIDs } from "$lib/ChannelIDs.js";
 
+function sleep(ms: number) {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export async function POST({ request }) {
 	try {
 		let { channelID, channelName } = await request.json();
@@ -10,7 +14,7 @@ export async function POST({ request }) {
 		const twoWeeksAgo = new Date();
 		twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 15);
 		const publishedAfter = twoWeeksAgo.toISOString();
-		let index: number = 0;
+		let index: number = 1;
 		let indexGoal: number = 0;
 		let data: any;
 		let oneIteration: boolean = false;
@@ -46,7 +50,7 @@ export async function POST({ request }) {
 
 			let date = new Date();
 			// Write to file (you might want to adjust the file path and naming)
-			writeFile(
+			await writeFile(
 				`files/${channelName}_${date.getDate()}${date.getMonth()}${date.getFullYear()}_${date.getHours()}.json`,
 				JSON.stringify(data.items)
 			);
@@ -57,7 +61,7 @@ export async function POST({ request }) {
 		}
 
 		return json(data); // I know this is returning just the last piece of data, but since data is stored it does not matter
-	} catch (error) {
-		return json({ error: "Failed to fetch data" }, { status: 500 });
+	} catch (error: any) {
+		return json({ error: error.message }, { status: 500 });
 	}
 }

@@ -36,7 +36,7 @@
 </script>
 
 {#if error}
-	<p>Error: {error}</p>
+	<p class="text-xl">Error: {error}</p>
 {/if}
 
 <div class="pt-6">
