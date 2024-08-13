@@ -5,6 +5,7 @@
 	let jsonData: any = { items: [] }; // this is unused atm but if need to stringify the data on the site I can use this
 	let error: any = null;
 	let channel: any = ChannelIDs[0];
+	let filter: string = "latest";
 	export let data;
 
 	async function fetchVids() {
@@ -38,21 +39,37 @@
 	<p>Error: {error}</p>
 {/if}
 
-<select bind:value={channel}>
-	{#each ChannelIDs as channelID}
-		<option value={channelID}>{channelID.name}</option>
-	{/each}
-</select>
-
-<button on:click={fetchVids} class="btn btn-lg m-10">Fetch the video data</button>
-
-<div class="flex flex-row">
-	<button class="btn">Latest</button>
-	<button class="btn">TTRPGs</button>
-	<button class="btn">Engineering</button>
+<div class="pt-6">
+	<select class="select select-lg w-full max-w-xs" bind:value={channel}>
+		{#each ChannelIDs as channelID}
+			<option value={channelID}>{channelID.name}</option>
+		{/each}
+	</select>
+	<button on:click={fetchVids} class="btn btn-lg m-10 btn-primary">Fetch the video data</button>
 </div>
 
-<div class="grid grid-cols-4">
+<div class="flex flex-row gap-6 mb-6 navbar bg-neutral rounded-box w-full">
+	<button
+		class="btn {filter === 'latest' ? 'btn-primary' : ''}"
+		on:click={() => {
+			filter = "latest";
+		}}>Latest</button
+	>
+	<button
+		class="btn {filter === 'TTRPGs' ? 'btn-primary' : ''}"
+		on:click={() => {
+			filter = "TTRPGs";
+		}}>TTRPGs</button
+	>
+	<button
+		class="btn {filter === 'Engineering' ? 'btn-primary' : ''}"
+		on:click={() => {
+			filter = "Engineering";
+		}}>Engineering</button
+	>
+</div>
+
+<!-- <div class="grid grid-cols-4">
 	{#if data.files}
 		{#each data.files as item}
 			<div class="">
@@ -63,7 +80,7 @@
 						item.snippet.publishedAt
 					).getHours()}h
 				</p>
-				<!-- Generate a link to the dynamic route with the videoId -->
+				Generate a link to the dynamic route with the videoId
 				<a href={`/videos/${item.id.videoId}`} target="_blank">
 					<img src={item.snippet.thumbnails.medium.url} alt={item.snippet.title} />
 				</a>
@@ -72,4 +89,4 @@
 			</div>
 		{/each}
 	{/if}
-</div>
+</div> -->
