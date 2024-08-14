@@ -4,11 +4,24 @@
 	let channelId: string;
 	let tags: string;
 
-	function handleSubmit() {}
+	async function handleSubmit() {
+		const channel = {
+			channelName,
+			channelId,
+			tags
+		};
+		await fetch("/api/submitChannel", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(channel)
+		});
+	}
 </script>
 
 <h1>Add a database entry</h1>
-<form on:submit|preventDefault={handleSubmit}>
+<form on:submit={handleSubmit}>
 	<label for="channelName">Channel Name:</label>
 	<input type="text" id="channelName" class="input input-accent" bind:value={channelName} />
 
