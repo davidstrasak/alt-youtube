@@ -6,13 +6,31 @@ export async function POST({ request }) {
 
 	const { channelName, channelId, tags } = body;
 
-	await db.youTubeChannel.create({
-		data: {
-			channelName,
-			channelId,
-			tags
+	let existingEntry = await db.youTubeChannel.findFirst({
+		where: {
+			channelId
 		}
 	});
+
+	if (!existingEntry) {
+		await db.youTubeChannel.create({
+			data: {
+				channelName,
+				channelId,
+				tags
+			}
+		});
+	} else {
+		await db.youTubeChannel.update({
+			where: {
+				channelId
+			},
+			data: {
+				channelName,
+				tags
+			}
+		});
+	}
 
 	return json("ok");
 }

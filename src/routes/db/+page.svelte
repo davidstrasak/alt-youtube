@@ -17,6 +17,23 @@
 			},
 			body: JSON.stringify(channel)
 		});
+		location.reload();
+	}
+
+	async function removeChannel(channelName: string, channelId: string, tags: string) {
+		const channel = {
+			channelName,
+			channelId,
+			tags
+		};
+		await fetch("/api/removeChannel", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(channel)
+		});
+		location.reload();
 	}
 </script>
 
@@ -48,8 +65,10 @@
 				<td>{channelName}</td>
 				<td>{channelId}</td>
 				<td>{tags}</td>
-				<button class="btn btn-secondary">Remove</button>
-				<button class="btn btn-secondary">update</button>
+				<button
+					class="btn btn-secondary"
+					on:click={() => removeChannel(channelName, channelId, tags)}>Remove</button
+				>
 			</tr>
 		{/each}
 	</tbody>
