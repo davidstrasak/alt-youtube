@@ -29,7 +29,7 @@
 
 <main style="height: {entireHeight}" class="bg-base-300">
 	<header class="fixed top-0 left-0 right-0 z-50 bg-base-100 shadow-md" bind:this={headerObject}>
-		<div class="container mx-auto flex items-center justify-between py-4">
+		<div class="container mx-auto flex items-center justify-between py-4 gap-6">
 			<a href="/" class="btn btn-ghost normal-case text-xl">ForesTube</a>
 			<form on:submit|preventDefault={handleSubmit} class="flex-1">
 				<input
@@ -40,6 +40,7 @@
 					bind:value={searchQuery}
 				/>
 			</form>
+			<a href="/db" class="btn btn-primary">UPDATE THE LIST OF CHANNELS</a>
 		</div>
 	</header>
 
