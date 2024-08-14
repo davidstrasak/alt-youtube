@@ -1,0 +1,22 @@
+<script lang="ts">
+	export let data;
+	let channelName: string;
+	let channelId: string;
+	let tags: string;
+
+	function handleSubmit() {}
+</script>
+
+<h1>Add a database entry</h1>
+<form on:submit|preventDefault={handleSubmit}>
+	<label for="channelName">Channel Name:</label>
+	<input type="text" id="channelName" class="input input-accent" bind:value={channelName} />
+
+	<label for="channelId">Channel ID:</label>
+	<input type="text" id="channelId" class="input input-accent" bind:value={channelId} />
+
+	<label for="tags">tags:</label>
+	<input type="text" id="tags" class="w-1/2 input input-accent" bind:value={tags} />
+
+	<button type="submit">Submit</button>
+</form>
