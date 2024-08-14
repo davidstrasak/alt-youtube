@@ -1,12 +1,13 @@
 <script lang="ts">
-	import { ChannelIDs } from "$lib/ChannelIDs.js";
 	import he from "he";
 
+	export let data;
+	let { ChannelIDs } = data;
 	let jsonData: any = { items: [] }; // this is unused atm but if need to stringify the data on the site I can use this
 	let error: any = null;
+
 	let channel: any = ChannelIDs[0];
 	let filter: string = "latest";
-	export let data;
 
 	async function fetchVids() {
 		try {
@@ -15,7 +16,7 @@
 				headers: {
 					"Content-Type": "application/json"
 				},
-				body: JSON.stringify({ channelID: channel.ID, channelName: channel.name })
+				body: JSON.stringify({ channelID: channel.channelId, channelName: channel.channelName })
 			});
 
 			if (!response.ok) {
@@ -42,7 +43,7 @@
 <div class="w-full">
 	<select class="select select-lg w-full max-w-80" bind:value={channel}>
 		{#each ChannelIDs as channelID}
-			<option value={channelID}>{channelID.name}</option>
+			<option value={channelID}>{channelID.channelName}</option>
 		{/each}
 	</select>
 	<button on:click={fetchVids} class="btn btn-lg my-10 mx-auto btn-primary"

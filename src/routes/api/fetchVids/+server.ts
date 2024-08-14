@@ -1,15 +1,13 @@
 import { json } from "@sveltejs/kit";
 import { YT_API_KEY } from "$env/static/private";
 import { writeFile } from "fs/promises";
-import { ChannelIDs } from "$lib/ChannelIDs.js";
-
-function sleep(ms: number) {
-	return new Promise((resolve) => setTimeout(resolve, ms));
-}
+import { db } from "$lib/server/database";
 
 export async function POST({ request }) {
 	try {
 		let { channelID, channelName } = await request.json();
+		console.log(channelID, channelName);
+
 		let apiKey = YT_API_KEY;
 		const twoWeeksAgo = new Date();
 		twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 15);
@@ -18,6 +16,13 @@ export async function POST({ request }) {
 		let indexGoal: number = 0;
 		let data: any;
 		let oneIteration: boolean = false;
+		const ChannelIDs = await db.youTubeChannel.findMany({
+			select: {
+				channelName: true,
+				channelId: true,
+				tags: true
+			}
+		});
 
 		if (channelID === "all") {
 			indexGoal = ChannelIDs.length;
@@ -27,8 +32,8 @@ export async function POST({ request }) {
 
 		while (oneIteration || index < indexGoal) {
 			if (!oneIteration) {
-				channelID = ChannelIDs[index].ID;
-				channelName = ChannelIDs[index].name;
+				channelID = ChannelIDs[index].channelId;
+				channelName = ChannelIDs[index].channelName;
 				index++;
 			}
 
@@ -45,6 +50,8 @@ export async function POST({ request }) {
 			if (!response.ok) {
 				throw new Error(`Error: ${response.status}`);
 			}
+
+			await console.log("ya");
 
 			data = await response.json();
 
