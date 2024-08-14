@@ -20,3 +20,24 @@
 
 	<button type="submit">Submit</button>
 </form>
+
+<table>
+	<thead>
+		<tr>
+			<th>Channel Name</th>
+			<th>Channel ID</th>
+			<th>Tags</th>
+		</tr>
+	</thead>
+	<tbody>
+		{#each data.channels as { channelName, channelId, tags }}
+			<tr>
+				<td>{channelName}</td>
+				<td>{channelId}</td>
+				<td>{tags}</td>
+				<button class="btn btn-secondary">Remove</button>
+				<button class="btn btn-secondary">update</button>
+			</tr>
+		{/each}
+	</tbody>
+</table>
