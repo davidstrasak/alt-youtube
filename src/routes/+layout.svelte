@@ -16,8 +16,10 @@
 	}
 	onMount(() => {
 		addEventListener("resize", setBoundaries);
+		addEventListener("click", setBoundaries);
 		return () => {
 			window.removeEventListener("resize", setBoundaries); // cleanup
+			window.removeEventListener("click", setBoundaries);
 		};
 	});
 	afterUpdate(() => {

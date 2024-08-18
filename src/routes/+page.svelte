@@ -12,7 +12,7 @@
 	let channel: any = ChannelIDs[0];
 	let filter: string = "Latest";
 
-	let tags = ["Latest", ...ChannelIDs.map((channel) => channel.tags)];
+	let tags = ["Latest", ...ChannelIDs.map((channel) => channel.tags).sort()];
 	let uniqueTags = [...new Set(tags)];
 	uniqueTags.map((tag) => {
 		if (tag === "all") {
@@ -95,7 +95,7 @@
 	{#if data.files}
 		{#each filteredData as item}
 			<div class="mx-auto" style="width: 320px">
-				<p class="font-bold text-accent">{item.channelName}</p>
+				<p class="font-bold text-accent mb-1">{decodeHtmlEntities(item.snippet.title)}</p>
 				<!-- Generate a link to the dynamic route with the videoId -->
 				<a href={`/videos/${item.id.videoId}`} target="_blank">
 					<img
@@ -104,7 +104,7 @@
 						class="rounded-box"
 					/>
 				</a>
-				<p class="font-bold text-secondary mb-1">{decodeHtmlEntities(item.snippet.title)}</p>
+				<p class="font-bold text-secondary">{item.channelName}</p>
 				<p class="text-justify">{decodeHtmlEntities(item.snippet.description)}</p>
 				<p>
 					Publikováno: {new Date(item.snippet.publishedAt).getDate()}.{new Date(

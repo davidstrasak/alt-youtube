@@ -17,5 +17,10 @@ export async function load({}) {
 		return a.channelName.localeCompare(b.channelName);
 	});
 
+	channels.sort((a, b) => {
+		// Compare channel names alphabetically
+		return a.tags.localeCompare(b.tags);
+	});
+
 	return { channels };
 }
