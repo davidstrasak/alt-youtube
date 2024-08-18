@@ -24,15 +24,21 @@
 			}
 
 			jsonData = await response.json();
+
+			await location.reload();
 		} catch (err: any) {
 			error = err.message;
-		} finally {
-			location.reload();
 		}
 	}
 
 	function decodeHtmlEntities(text: string): string {
 		return he.decode(text);
+	}
+
+	function findChannelName(channelId: string) {
+		const channel = ChannelIDs.find((channel) => channel.channelId === channelId);
+
+		return channel?.channelName;
 	}
 </script>
 
@@ -85,6 +91,7 @@
 						item.snippet.publishedAt
 					).getHours()}h
 				</p>
+				<p>{findChannelName(item.snippet.channelId)}</p>
 				<!-- Generate a link to the dynamic route with the videoId -->
 				<a href={`/videos/${item.id.videoId}`} target="_blank">
 					<img

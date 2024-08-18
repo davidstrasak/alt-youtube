@@ -15,11 +15,15 @@ export async function GET() {
 	fileData = fileData.flat();
 
 	// Keep only unique data based on a unique identifier (e.g., id)
-	const uniqueData = Array.from(new Set(fileData.map((item) => item.id.videoId))).map((videoId) =>
+	let uniqueData = Array.from(new Set(fileData.map((item) => item.id.videoId))).map((videoId) =>
 		fileData.find((item) => item.id.videoId === videoId)
 	);
 	uniqueData.sort((a, b) => {
 		return new Date(b.snippet.publishedAt).getTime() - new Date(a.snippet.publishedAt).getTime();
+	});
+
+	uniqueData = uniqueData.filter((item) => {
+		return item.snippet.liveBroadcastContent !== "upcoming";
 	});
 
 	return json(uniqueData);

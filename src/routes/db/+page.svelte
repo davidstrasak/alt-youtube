@@ -12,6 +12,9 @@
 				channelId,
 				tags
 			};
+			if (channelName === "" || channelId === "" || tags === "") {
+				throw new Error("Please fill out all fields");
+			}
 			await fetch("/api/submitChannel", {
 				method: "POST",
 				headers: {
@@ -19,9 +22,10 @@
 				},
 				body: JSON.stringify(channel)
 			});
-			location.reload();
 		} catch (e) {
 			error = e;
+		} finally {
+			location.reload();
 		}
 	}
 
@@ -41,10 +45,6 @@
 		location.reload();
 	}
 </script>
-
-{#if error}
-	<p>{error.message}</p>
-{/if}
 
 <h1 class="text-3xl">Add a database entry</h1>
 <br />
@@ -73,10 +73,16 @@
 		<button class="btn btn-outline btn-accent" type="submit">Submit</button>
 	</div>
 </form>
+
+{#if error}
+	<p class="text-3xl">{error.message}</p>
+{/if}
 <br />
 <br />
 
-<h1 class="text-3xl">Go through the existing entries</h1>
+<h1 class="text-3xl">
+	Go through the existing entries. You have {data.channels.length + 1} of them
+</h1>
 <br />
 <table class="table-fixed w-full">
 	<thead class="text-left text-secondary">
@@ -89,7 +95,7 @@
 	</thead>
 	<tbody class="">
 		{#each data.channels as { channelName, channelId, tags }}
-			<tr>
+			<tr class="space-y-2">
 				<td>{channelName}</td>
 				<td>{channelId}</td>
 				<td>{tags}</td>
