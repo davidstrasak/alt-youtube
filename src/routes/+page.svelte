@@ -12,7 +12,7 @@
 	let channel: any = ChannelIDs[0];
 	let filter: string = "Latest";
 
-	let tags = ["Latest", ...ChannelIDs.map((channel) => channel.tags).sort()];
+	let tags = ["Latest", ...ChannelIDs.map((channel: any) => channel.tags).sort()];
 	let uniqueTags = [...new Set(tags)];
 	uniqueTags.map((tag) => {
 		if (tag === "all") {
@@ -24,9 +24,9 @@
 		if (filter === "Latest") {
 			return true; // Include all items if filter is "Latest"
 		} else {
-			return ChannelIDs.find((channel) => channel.channelName === item.channelName)?.tags.includes(
-				filter
-			);
+			return ChannelIDs.find(
+				(channel: any) => channel.channelName === item.channelName
+			)?.tags.includes(filter);
 		}
 	});
 
@@ -57,7 +57,7 @@
 	}
 
 	function findChannelName(channelId: string) {
-		const channel = ChannelIDs.find((channel) => channel.channelId === channelId);
+		const channel = ChannelIDs.find((channel: any) => channel.channelId === channelId);
 
 		return channel?.channelName;
 	}
