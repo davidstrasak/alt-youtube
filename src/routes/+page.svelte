@@ -9,6 +9,10 @@
 	let channel: any = ChannelIDs[0];
 	let filter: string = "latest";
 
+	let tags = ["Latest", ...ChannelIDs.map((channel) => channel.tags)];
+	let uniqueTags = [...new Set(tags)];
+	console.log(uniqueTags);
+
 	async function fetchVids() {
 		try {
 			const response = await fetch("/api/fetchVids", {
@@ -60,24 +64,14 @@
 <div
 	class="flex flex-row gap-6 mb-6 navbar bg-neutral rounded-box w-full justify-center md:justify-normal"
 >
-	<button
-		class="btn {filter === 'latest' ? 'btn-primary' : ''}"
-		on:click={() => {
-			filter = "latest";
-		}}>Latest</button
-	>
-	<button
-		class="btn {filter === 'TTRPGs' ? 'btn-primary' : ''}"
-		on:click={() => {
-			filter = "TTRPGs";
-		}}>TTRPGs</button
-	>
-	<button
-		class="btn {filter === 'Engineering' ? 'btn-primary' : ''}"
-		on:click={() => {
-			filter = "Engineering";
-		}}>Engineering</button
-	>
+	{#each uniqueTags as tag}
+		<button
+			class="btn {filter === tag ? 'btn-primary' : ''}"
+			on:click={() => {
+				filter = tag;
+			}}>{tag}</button
+		>
+	{/each}
 </div>
 
 <div class="grid gap-10 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 xl:grid-cols-4">

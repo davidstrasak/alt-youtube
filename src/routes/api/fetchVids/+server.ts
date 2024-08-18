@@ -6,7 +6,6 @@ import { db } from "$lib/server/database";
 export async function POST({ request }) {
 	try {
 		let { channelID, channelName } = await request.json();
-		console.log(channelID, channelName);
 
 		let apiKey = YT_API_KEY;
 		const twoWeeksAgo = new Date();
@@ -50,8 +49,6 @@ export async function POST({ request }) {
 			if (!response.ok) {
 				throw new Error(`Error: ${response.status}`);
 			}
-
-			await console.log("ya");
 
 			data = await response.json();
 
