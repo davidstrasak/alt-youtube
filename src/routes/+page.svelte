@@ -5,13 +5,30 @@
 	let { ChannelIDs } = data;
 	let jsonData: any = { items: [] }; // this is unused atm but if need to stringify the data on the site I can use this
 	let error: any = null;
+	data.files.forEach((item: any) => {
+		item.channelName = findChannelName(item.snippet.channelId);
+	});
 
 	let channel: any = ChannelIDs[0];
-	let filter: string = "latest";
+	let filter: string = "Latest";
 
 	let tags = ["Latest", ...ChannelIDs.map((channel) => channel.tags)];
 	let uniqueTags = [...new Set(tags)];
-	console.log(uniqueTags);
+	uniqueTags.map((tag) => {
+		if (tag === "all") {
+			uniqueTags.splice(uniqueTags.indexOf(tag), 1);
+		}
+	});
+
+	$: filteredData = data.files.filter((item: any) => {
+		if (filter === "Latest") {
+			return true; // Include all items if filter is "Latest"
+		} else {
+			return ChannelIDs.find((channel) => channel.channelName === item.channelName)?.tags.includes(
+				filter
+			);
+		}
+	});
 
 	async function fetchVids() {
 		try {
@@ -76,16 +93,9 @@
 
 <div class="grid gap-10 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 xl:grid-cols-4">
 	{#if data.files}
-		{#each data.files as item}
+		{#each filteredData as item}
 			<div class="mx-auto" style="width: 320px">
-				<p>
-					Publikováno: {new Date(item.snippet.publishedAt).getDate()}.{new Date(
-						item.snippet.publishedAt
-					).getMonth() + 1}.{new Date(item.snippet.publishedAt).getFullYear()} v {new Date(
-						item.snippet.publishedAt
-					).getHours()}h
-				</p>
-				<p>{findChannelName(item.snippet.channelId)}</p>
+				<p class="font-bold text-accent">{item.channelName}</p>
 				<!-- Generate a link to the dynamic route with the videoId -->
 				<a href={`/videos/${item.id.videoId}`} target="_blank">
 					<img
@@ -94,8 +104,15 @@
 						class="rounded-box"
 					/>
 				</a>
-				<p>{decodeHtmlEntities(item.snippet.title)}</p>
+				<p class="font-bold text-secondary mb-1">{decodeHtmlEntities(item.snippet.title)}</p>
 				<p class="text-justify">{decodeHtmlEntities(item.snippet.description)}</p>
+				<p>
+					Publikováno: {new Date(item.snippet.publishedAt).getDate()}.{new Date(
+						item.snippet.publishedAt
+					).getMonth() + 1}.{new Date(item.snippet.publishedAt).getFullYear()} v {new Date(
+						item.snippet.publishedAt
+					).getHours()}h
+				</p>
 			</div>
 		{/each}
 	{/if}
