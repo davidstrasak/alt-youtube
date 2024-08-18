@@ -97,7 +97,7 @@
 			<div class="mx-auto" style="width: 320px">
 				<p class="font-bold text-accent mb-1">{decodeHtmlEntities(item.snippet.title)}</p>
 				<!-- Generate a link to the dynamic route with the videoId -->
-				<a href={`/videos/${item.id.videoId}`} target="_blank">
+				<a href={`/videos/${item.id.videoId}`}>
 					<img
 						src={item.snippet.thumbnails.medium.url}
 						alt={item.snippet.title}
