@@ -1,6 +1,6 @@
 # An alternative YouTube app
 
-Where you can filter out the channels that interest you
+Where you can filter out the channels that interest you.
 
 ## How to start:
 
@@ -19,13 +19,9 @@ Prisma is a database used for storing the YouTube channels. You will need to ini
 
 ```bash
 npx prisma generate
-```
-
-If the database is not working, try:
-
-```bash
 npx prisma migrate dev
 npx prisma migrate deploy
+npx prisma generate
 ```
 
 ## How to use this app:
